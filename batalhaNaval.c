@@ -1,40 +1,84 @@
 #include <stdio.h>
-
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
-
+   
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+    printf("Batalha Naval!/n");
+  
+    int tabuleiro[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
+    int linha, coluna; 
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+    printf("Inicializando tabuleiro com agua (0)...\n");
+    for (linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
+        for (coluna = 0; coluna < TAMANHO_TABULEIRO; coluna++) {
+            tabuleiro[linha][coluna] = AGUA;
+        }
+    }
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+    int navio1_linha_inicial = 2;
+    int navio1_coluna_inicial = 3;
+    int navio1[TAMANHO_NAVIO] = {NAVIO, NAVIO, NAVIO};
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
+    int navio2_linha_inicial = 5;
+    int navio2_coluna_inicial = 2;
+    int navio2[TAMANHO_NAVIO] = {NAVIO, NAVIO, NAVIO};
+
+    int navio1_valido = 1;
+
+    if (navio1_coluna_inicial + TAMANHO_NAVIO > TAMANHO_TABULEIRO) {
+        printf("Erro: Navio 1 (horizontal) ultrapassa o limite do tabuleiro.\n");
+        navio1_valido = 0;
+    }
+
+    if (navio1_valido) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[navio1_linha_inicial][navio1_coluna_inicial + i] = NAVIO;
+        }
+        printf("Navio 1 posicionado com sucesso (horizontal).\n");
+    } else {
+        printf("Navio 1 não foi posicionado devido a erro.\n");
+    }
+
+    int navio2_valido = 1; // Flag para verificar se o navio é válido
+
+    if (navio2_linha_inicial + TAMANHO_NAVIO > TAMANHO_TABULEIRO) {
+        printf("Erro: Navio 2 (vertical) ultrapassa o limite do tabuleiro.\n");
+        navio2_valido = 0;
+    }
+
+    if (navio2_valido) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
+            if (tabuleiro[navio2_linha_inicial + i][navio2_coluna_inicial] == NAVIO) {
+                printf("Erro: Navio 2 (vertical) se sobrepõe ao Navio 1.\n");
+                navio2_valido = 0;
+                break; 
+            }
+        }
+    }
+
+    if (navio2_valido) {
+        for (i = 0; i < TAMANHO_NAVIO; i++) {
+            tabuleiro[navio2_linha_inicial + i][navio2_coluna_inicial] = NAVIO;
+        }
+        printf("Navio 2 posicionado com sucesso (vertical).\n");
+    } else {
+        printf("Navio 2 não foi posicionado devido a erro ou sobreposição.\n");
+    }
+
+
+    printf("\n--- Tabuleiro Final ---\n");
     
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+    printf("   "); 
+    for (coluna = 0; coluna < TAMANHO_TABULEIRO; coluna++) {
+        printf("%2d ", coluna);
+    }
+    printf("\n");
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+    for (linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
+        printf("%2d ", linha); 
+        for (coluna = 0; coluna < TAMANHO_TABULEIRO; coluna++) {
+            printf("%2d ", tabuleiro[linha][coluna]);
+        }
+        printf("\n");
+    }
 
-    return 0;
+    return 0; 
 }
